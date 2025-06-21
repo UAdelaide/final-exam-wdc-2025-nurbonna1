@@ -1,4 +1,4 @@
-home.js
+
 document.addEventListener('DOMContentLoaded', async () => {
   const res = await fetch('/api/dogs');
   const dogs = await res.json();
