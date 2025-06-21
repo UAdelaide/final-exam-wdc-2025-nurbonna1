@@ -19,3 +19,10 @@ app.use('/users', usersRouter);
 
 module.exports = app;
 
+const session = require('express-session');
+
+app.use(session({
+  secret: 'dogwalk-secret',
+  resave: false,
+  saveUninitialized: true,
+}));
