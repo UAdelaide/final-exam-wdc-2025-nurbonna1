@@ -137,3 +137,9 @@
   <button type="submit">Logout</button>
 </form>
 
+<label for="dog_id">Choose your dog:</label>
+<select name="dog_id" id="dog_id" required>
+  <% dogs.forEach(function(dog) { %>
+    <option value="<%= dog.dog_id %>"><%= dog.name %></option>
+  <% }) %>
+</select>
