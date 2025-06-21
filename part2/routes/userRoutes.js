@@ -56,3 +56,47 @@ router.post('/login', async (req, res) => {
 });
 
 module.exports = router;
+
+
+
+
+
+const express = require('express');
+const router = express.Router();
+const db = require('../db'); // assuming you have a db connection module
+
+router.post('/login', async (req, res) => {
+  const { username, password } = req.body;
+
+  try {
+    const [rows] = await db.query(
+      'SELECT * FROM Users WHERE username = ? AND password_hash = ?',
+      [username, password]
+    );
+
+    if (rows.length === 1) {
+      const user = rows[0];
+      req.session.user = {
+        id: user.user_id,
+        username: user.username,
+        role: user.role
+      };
+
+      // Redirect based on role
+      if (user.role === 'owner') {
+        res.json({ redirect: '/owner-dashboard' });
+      } else if (user.role === 'walker') {
+        res.json({ redirect: '/walker-dashboard' });
+      } else {
+        res.status(400).json({ error: 'Unknown role' });
+      }
+    } else {
+      res.status(401).json({ error: 'Invalid username or password' });
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+module.exports = router;
