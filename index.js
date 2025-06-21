@@ -35,4 +35,14 @@ router.post('/login', async (req, res) => {
   }
 });
 
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+      if (err) {
+        return res.status(500).send('Logout error');
+      }
+      res.clearCookie('connect.sid'); // Clear session cookie
+      res.redirect('/'); // Redirect back to login page
+    });
+  });
+
 module.exports = router;
