@@ -61,7 +61,6 @@ router.post('/:id/apply', async (req, res) => {
 
 module.exports = router;
 
-walkRoutes.js
 async function getCurrentUser() {
   try {
     const res = await fetch('/api/users/me');
