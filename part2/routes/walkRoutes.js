@@ -61,3 +61,14 @@ router.post('/:id/apply', async (req, res) => {
 
 module.exports = router;
 
+walkRoutes.js
+async function getCurrentUser() {
+  try {
+    const res = await fetch('/api/users/me');
+    if (!res.ok) throw new Error('Failed to fetch current user');
+    return await res.json();
+  } catch (err) {
+    console.error('Error in getCurrentUser:', err);
+    return null;
+  }
+}
